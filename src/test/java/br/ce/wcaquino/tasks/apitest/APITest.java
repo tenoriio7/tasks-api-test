@@ -22,32 +22,17 @@ public class APITest {
 
 	@Test
 	public void deveAdicionaTarefaComSucesso() {
-		RestAssured.given()
-		.body("{\"task\": \"vinicin\",\"dueDate\": \"2040-12-30\"}")
-		.contentType(ContentType.JSON)
-		.log().all()
-		.when()
-			.post("/todo")
-		.then()
-			.log().all()
-			.statusCode(201);
-		
-	}
-	
-	@Test
-	public void naoDeveAdicionaTarefaComSucesso() {
-		RestAssured.given()
-		.body("{\"task\": \"vinicin\",\"dueDate\": \"2010-12-30\"}")
-		.contentType(ContentType.JSON)
-		.log().all()
-		.when()
-			.post("/todo")
-		.then()
-			.log().all()
-			.statusCode(400)
-			.body("message", CoreMatchers.is("Due date must not be in past"));
-		
+		RestAssured.given().body("{\"task\": \"vinicin\",\"dueDate\": \"2040-12-30\"}").contentType(ContentType.JSON)
+				.log().all().when().post("/todo").then().log().all().statusCode(201);
+
 	}
 
+	@Test
+	public void naoDeveAdicionaTarefaComSucesso() {
+		RestAssured.given().body("{\"task\": \"vinicin\",\"dueDate\": \"2010-12-30\"}").contentType(ContentType.JSON)
+				.log().all().when().post("/todo").then().log().all().statusCode(400)
+				.body("message", CoreMatchers.is("Due date must not be in past"));
+
+	}
 
 }
